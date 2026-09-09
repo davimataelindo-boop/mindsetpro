@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mente Forte — self-contained full-stack MVP using only Python's standard library."""
+"""mindsetpro — self-contained full-stack MVP using only Python's standard library."""
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 from http import cookies
@@ -222,7 +222,7 @@ class App(BaseHTTPRequestHandler):
         if path == "/api/dashboard": return self.api_dashboard()
         if path == "/api/thoughts": return self.api_thoughts()
         if path == "/api/notifications": return self.api_notifications()
-        if path == "/health": return json_response(self, {"ok": True, "service": "mente-forte"})
+        if path == "/health": return json_response(self, {"ok": True, "service": "mindsetpro"})
         return self.static_file(path)
 
     def do_POST(self):
@@ -330,9 +330,15 @@ class App(BaseHTTPRequestHandler):
         try: file_path.relative_to(STATIC.resolve())
         except ValueError: return error(self, "Arquivo não encontrado", 404)
         if not file_path.is_file(): return error(self, "Arquivo não encontrado", 404)
+        if not file_path.is_file():
+            flat_path = (ROOT / path.lstrip("/")).resolve()
+            try: flat_path.relative_to(ROOT.resolve())
+            except ValueError: return error(self, "Arquivo não encontrado", 404)
+            if flat_path.is_file(): file_path = flat_path
+        if not file_path.is_file(): return error(self, "Arquivo não encontrado", 404)
         data = file_path.read_bytes(); content_type = mimetypes.guess_type(str(file_path))[0] or "application/octet-stream"
         self.send_response(200); self.send_header("Content-Type", content_type + ("; charset=utf-8" if content_type.startswith("text/") or content_type in ("application/javascript", "application/json") else "")); self.send_header("Content-Length", str(len(data))); self.send_header("Cache-Control", "no-cache"); self.end_headers(); self.wfile.write(data)
 
 
 if __name__ == "__main__":
-    init_db(); print(f"Mente Forte rodando em http://127.0.0.1:{PORT}"); ThreadingHTTPServer(("0.0.0.0", PORT), App).serve_forever()
+    init_db(); print(f"mindsetpro rodando em http://127.0.0.1:{PORT}"); ThreadingHTTPServer(("0.0.0.0", PORT), App).serve_forever()
