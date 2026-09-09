@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101828">
+  <title>mindsetpro · atividades por tópico</title>
+  <link rel="stylesheet" href="/styles.css">
+  <style>
+    .activities-page{min-height:100vh;background:var(--soft)}
+    .activities-top{background:var(--ink);color:white;padding:28px max(22px,calc((100% - 1120px)/2)) 34px}
+    .activities-top .brand{color:white}
+    .activities-top h1{font-size:clamp(34px,5vw,55px);line-height:1;letter-spacing:-.07em;max-width:680px;margin:55px 0 12px}
+    .activities-top p{color:#c2c9d1;max-width:620px;font-size:15px;margin:0}
+    .activities-wrap{max-width:1120px;margin:0 auto;padding:38px 22px 80px}
+    .topic-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:17px}
+    .topic{background:white;border:1px solid var(--line);border-radius:22px;padding:25px;scroll-margin-top:20px}
+    .topic-top{display:flex;align-items:center;gap:12px;margin-bottom:16px}
+    .topic-icon{width:42px;height:42px;border-radius:13px;background:var(--lime);display:grid;place-items:center;font-size:20px}
+    .topic h2{font-size:24px;letter-spacing:-.06em;margin:0}
+    .topic-intro{color:var(--muted);font-size:13px;margin:0 0 18px}
+    .activity{display:grid;grid-template-columns:30px 1fr;gap:11px;border-top:1px solid var(--line);padding:14px 0 0;margin-top:12px}
+    .activity-number{height:26px;width:26px;border-radius:50%;background:var(--ink);color:var(--lime);display:grid;place-items:center;font-size:11px;font-weight:900}
+    .activity strong{display:block;font-size:13px;margin-bottom:3px}
+    .activity span{display:block;color:var(--muted);font-size:12px;line-height:1.5}
+    .back-link{display:inline-flex;margin-top:27px;color:var(--ink);font-size:13px;font-weight:850}
+    @media(max-width:700px){.activities-top h1{margin-top:42px}.topic-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body class="activities-page">
+  <header class="activities-top">
+    <a class="brand" href="/"><span class="brand-mark">✦</span> mindsetpro</a>
+    <h1>Atividades para treinar sua mente.</h1>
+    <p>Escolha um tópico, faça uma prática por vez e marque seu progresso na semana. Não precisa fazer tudo hoje.</p>
+  </header>
+  <main class="activities-wrap">
+    <div class="topic-grid">
+      <article class="topic" id="foco">
+        <div class="topic-top"><div class="topic-icon">◎</div><h2>Foco e atenção</h2></div>
+        <p class="topic-intro">Escolha o essencial e proteja sua atenção do excesso de estímulos.</p>
+        <div class="activity"><div class="activity-number">1</div><div><strong>Prioridade única</strong><span>Escreva a tarefa que mais merece sua energia hoje.</span></div></div>
+        <div class="activity"><div class="activity-number">2</div><div><strong>Bloco sem distração</strong><span>Faça 15 minutos sem alternar de janela ou aplicativo.</span></div></div>
+        <div class="activity"><div class="activity-number">3</div><div><strong>Volta ao agora</strong><span>Respire três vezes e retome apenas o próximo movimento.</span></div></div>
+      </article>
+      <article class="topic" id="confianca">
+        <div class="topic-top"><div class="topic-icon" style="background:#e1f5fd">↗</div><h2>Confiança em ação</h2></div>
+        <p class="topic-intro">Construa confiança acumulando pequenas evidências de que você consegue agir.</p>
+        <div class="activity"><div class="activity-number">1</div><div><strong>Reconheça uma força</strong><span>Anote algo que você já aprendeu a fazer bem.</span></div></div>
+        <div class="activity"><div class="activity-number">2</div><div><strong>Aja pequeno</strong><span>Faça uma ação de cinco minutos em direção ao seu objetivo.</span></div></div>
+        <div class="activity"><div class="activity-number">3</div><div><strong>Colecione evidências</strong><span>Registre uma decisão que você tomou e sustentou.</span></div></div>
+      </article>
+      <article class="topic" id="resiliencia">
+        <div class="topic-top"><div class="topic-icon" style="background:#fff0e9">◒</div><h2>Resiliência prática</h2></div>
+        <p class="topic-intro">Volte ao centro depois de erros, atrasos e imprevistos sem se abandonar no caminho.</p>
+        <div class="activity"><div class="activity-number">1</div><div><strong>Fato e história</strong><span>Escreva o que aconteceu e o que sua mente está concluindo.</span></div></div>
+        <div class="activity"><div class="activity-number">2</div><div><strong>Pausa de 60 segundos</strong><span>Respire antes de responder, decidir ou enviar uma mensagem.</span></div></div>
+        <div class="activity"><div class="activity-number">3</div><div><strong>Recomeço de cinco minutos</strong><span>Retome uma tarefa interrompida sem esperar vontade perfeita.</span></div></div>
+      </article>
+      <article class="topic" id="visao">
+        <div class="topic-top"><div class="topic-icon" style="background:#f3eaff">✦</div><h2>Visão com propósito</h2></div>
+        <p class="topic-intro">Conecte as pequenas escolhas de hoje com a vida que você quer construir.</p>
+        <div class="activity"><div class="activity-number">1</div><div><strong>Descreva o norte</strong><span>Escreva como você quer se sentir daqui a um ano.</span></div></div>
+        <div class="activity"><div class="activity-number">2</div><div><strong>Escolha um valor</strong><span>Defina qual valor merece espaço na sua agenda esta semana.</span></div></div>
+        <div class="activity"><div class="activity-number">3</div><div><strong>Faça caber</strong><span>Transforme seu objetivo em um compromisso de 15 minutos.</span></div></div>
+      </article>
+    </div>
+    <a class="back-link" href="/">← Voltar para o mindsetpro</a>
+  </main>
+</body>
+</html>
