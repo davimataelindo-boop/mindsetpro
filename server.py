@@ -8,8 +8,9 @@ from datetime import datetime, timedelta, timezone
 import hashlib, hmac, json, os, re, secrets, sqlite3, mimetypes
 
 ROOT = Path(__file__).parent
-STATIC = ROOT / "static"
+STATIC = ROOT / "static" if (ROOT / "static").is_dir() else ROOT
 DATA = ROOT / "data"
+DATA 
 DB_PATH = DATA / "mente_forte.db"
 PORT = int(os.getenv("PORT", "8000"))
 SESSION_DAYS = int(os.getenv("SESSION_DAYS", "30"))
