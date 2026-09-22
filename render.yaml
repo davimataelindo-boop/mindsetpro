@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: mente-forte
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    disk:
+      name: mente-forte-data
+      mountPath: /app/data
+      sizeGB: 1

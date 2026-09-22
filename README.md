@@ -13,7 +13,8 @@ Aplicação full-stack de treinamento semanal de mentalidade, feita com Python p
 - Página de atividades por tópico em `/atividades.html`
 - PWA instalável
 - Lembrete diário via Notification API + Service Worker neste dispositivo
-- Endpoint `/health` para monitoramento
+- Catálogo de planos premium focados em estudos, com intenções de foco, memória, provas e rotina
+- Endpoint `/api/study-offers` para catálogo premium e `/health` para monitoramento
 
 ## Rodar localmente
 
@@ -40,7 +41,7 @@ A aplicação pode ser executada em qualquer serviço que aceite um processo Pyt
 2. Defina `PORT` conforme o provedor.
 3. Monte um volume persistente em `/app/data` para preservar o SQLite.
 4. Para vários processos/instâncias, troque SQLite por PostgreSQL e coloque um proxy HTTPS na frente.
-5. O lembrete atual funciona quando o usuário abre o app nesse dispositivo. Para push em segundo plano mesmo com o app fechado, conecte um provedor Web Push/VAPID e um job agendado no servidor.
+5. O lembrete atual funciona quando o usuário abre o app nesse dispositivo. Para push em segundo plano mesmo com o app fechado, conecte um provedor Web Push/VAPID e um job agendado no servidor. Os planos premium de estudos estão apresentados como pré-lançamento; o checkout ainda não está integrado.
 
 ## Segurança antes de produção
 

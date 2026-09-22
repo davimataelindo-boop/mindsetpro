@@ -8,12 +8,19 @@ from datetime import datetime, timedelta, timezone
 import hashlib, hmac, json, os, re, secrets, sqlite3, mimetypes
 
 ROOT = Path(__file__).parent
+# Accept both layouts: files inside static/ or uploaded at the repository root.
 STATIC = ROOT / "static" if (ROOT / "static").is_dir() else ROOT
 DATA = ROOT / "data"
-DATA 
 DB_PATH = DATA / "mente_forte.db"
 PORT = int(os.getenv("PORT", "8000"))
 SESSION_DAYS = int(os.getenv("SESSION_DAYS", "30"))
+
+STUDY_PLANS = [
+    {"id": "estudo-foco", "title": "Foco para estudar", "subtitle": "Sessões curtas para vencer a distração.", "duration": "7 dias", "price": "R$ 9,90/mês", "icon": "◎", "features": ["blocos de estudo guiados", "ritual anti-distração", "progresso diário"]},
+    {"id": "estudo-memoria", "title": "Memória e revisão", "subtitle": "Aprenda melhor revisando no momento certo.", "duration": "14 dias", "price": "R$ 14,90/mês", "icon": "✦", "features": ["revisão espaçada", "recall ativo", "checklist de retenção"]},
+    {"id": "estudo-provas", "title": "Confiança para provas", "subtitle": "Prepare mente e rotina para avaliações.", "duration": "10 dias", "price": "R$ 19,90/mês", "icon": "↗", "features": ["plano pré-prova", "simulações de foco", "ritual de confiança"]},
+    {"id": "estudo-rotina", "title": "Rotina sem procrastinação", "subtitle": "Transforme intenção em horários possíveis.", "duration": "7 dias", "price": "R$ 9,90/mês", "icon": "◒", "features": ["planejamento leve", "primeiro passo", "recomeço sem culpa"]},
+]
 
 PLANS = {
     "foco": {
@@ -223,6 +230,7 @@ class App(BaseHTTPRequestHandler):
         if path == "/api/dashboard": return self.api_dashboard()
         if path == "/api/thoughts": return self.api_thoughts()
         if path == "/api/notifications": return self.api_notifications()
+        if path == "/api/study-offers": return self.api_study_offers()
         if path == "/health": return json_response(self, {"ok": True, "service": "mindsetpro"})
         return self.static_file(path)
 
@@ -317,6 +325,9 @@ class App(BaseHTTPRequestHandler):
         user = self.auth()
         if not user: return
         con = db(); row = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); con.close(); return json_response(self, {"enabled": bool(row["enabled"]), "reminder_time": row["reminder_time"]} if row else {"enabled": False, "reminder_time": "08:00"})
+
+    def api_study_offers(self):
+        return json_response(self, {"offers": STUDY_PLANS, "payment_status": "not_configured"})
 
     def api_save_notifications(self):
         user = self.auth()
