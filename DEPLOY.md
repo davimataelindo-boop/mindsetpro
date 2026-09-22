@@ -9,7 +9,9 @@ O arquivo `render.yaml` já descreve o serviço Docker, a rota de saúde e um di
 3. Selecione o repositório e confirme o arquivo `render.yaml`.
 4. Revise o nome do serviço e crie o serviço.
 5. Aguarde o primeiro deploy e abra o endereço gerado pela plataforma.
-6. Crie uma conta de teste e valide login, pontuação, diário, plano e lembretes.
+6. Adicione no Render as variáveis `ADMIN_EMAIL` e `ADMIN_PASSWORD` definidas pelo responsável.
+7. Crie uma conta de teste e valide login, pontuação, diário, plano e lembretes.
+8. Abra `/admin.html` e teste a liberação manual de um plano premium.
 
 O serviço expõe `/health`, que pode ser usado pela plataforma para verificar se o app está funcionando.
 

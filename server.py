@@ -14,6 +14,9 @@ DATA = ROOT / "data"
 DB_PATH = DATA / "mente_forte.db"
 PORT = int(os.getenv("PORT", "8000"))
 SESSION_DAYS = int(os.getenv("SESSION_DAYS", "30"))
+# Configure these only in the hosting provider; never hard-code admin credentials.
+ADMIN_EMAIL = os.getenv("ADMIN_EMAIL", "").strip().lower()
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "")
 
 STUDY_PLANS = [
     {"id": "estudo-foco", "title": "Foco para estudar", "subtitle": "Sessões curtas para vencer a distração.", "duration": "7 dias", "price": "R$ 9,90/mês", "icon": "◎", "features": ["blocos de estudo guiados", "ritual anti-distração", "progresso diário"]},
@@ -135,6 +138,21 @@ def init_db():
       reminder_time TEXT NOT NULL DEFAULT '08:00',
       updated_at TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS admin_sessions (
+      token TEXT PRIMARY KEY,
+      expires_at TEXT NOT NULL
+    );
+    CREATE TABLE IF NOT EXISTS subscriptions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      plan_id TEXT NOT NULL,
+      plan_title TEXT NOT NULL,
+      status TEXT NOT NULL DEFAULT 'active',
+      starts_at TEXT NOT NULL,
+      expires_at TEXT NOT NULL,
+      notes TEXT NOT NULL DEFAULT '',
+      created_at TEXT NOT NULL
+    );
     """)
     con.commit(); con.close()
 
@@ -191,6 +209,25 @@ def start_session(user_id):
     con = db(); con.execute("INSERT INTO sessions(token,user_id,expires_at) VALUES(?,?,?)", (token, user_id, expires)); con.commit(); con.close(); return token
 
 
+def admin_cookie(token):
+    jar = cookies.SimpleCookie(); jar["admin_session"] = token
+    jar["admin_session"]["path"] = "/"; jar["admin_session"]["max-age"] = str(SESSION_DAYS * 86400)
+    jar["admin_session"]["httponly"] = True; jar["admin_session"]["samesite"] = "Lax"
+    return jar.output(header="").strip()
+
+
+def start_admin_session():
+    token = secrets.token_urlsafe(40); expires = (datetime.now(timezone.utc) + timedelta(days=SESSION_DAYS)).replace(microsecond=0).isoformat()
+    con = db(); con.execute("INSERT INTO admin_sessions(token,expires_at) VALUES(?,?)", (token, expires)); con.commit(); con.close(); return token
+
+
+def admin_authenticated(handler):
+    jar = cookies.SimpleCookie(); jar.load(handler.headers.get("Cookie", "")); morsel = jar.get("admin_session")
+    if not morsel: return False
+    con = db(); row = con.execute("SELECT token FROM admin_sessions WHERE token=? AND expires_at>?", (morsel.value, now_iso())).fetchone(); con.close()
+    return bool(row)
+
+
 def parse_json(handler):
     try:
         length = int(handler.headers.get("Content-Length", "0")); raw = handler.rfile.read(length)
@@ -231,12 +268,14 @@ class App(BaseHTTPRequestHandler):
         if path == "/api/thoughts": return self.api_thoughts()
         if path == "/api/notifications": return self.api_notifications()
         if path == "/api/study-offers": return self.api_study_offers()
+        if path == "/api/admin/me": return self.api_admin_me()
+        if path == "/api/admin/users": return self.api_admin_users()
         if path == "/health": return json_response(self, {"ok": True, "service": "mindsetpro"})
         return self.static_file(path)
 
     def do_POST(self):
         path = urlparse(self.path).path
-        routes = {"/api/register": self.api_register, "/api/login": self.api_login, "/api/logout": self.api_logout, "/api/thoughts": self.api_add_thought, "/api/checkins": self.api_checkin, "/api/plans": self.api_create_plan, "/api/notifications": self.api_save_notifications}
+        routes = {"/api/register": self.api_register, "/api/login": self.api_login, "/api/logout": self.api_logout, "/api/thoughts": self.api_add_thought, "/api/checkins": self.api_checkin, "/api/plans": self.api_create_plan, "/api/notifications": self.api_save_notifications, "/api/admin/login": self.api_admin_login, "/api/admin/logout": self.api_admin_logout, "/api/admin/subscriptions": self.api_admin_subscription, "/api/admin/revoke": self.api_admin_revoke}
         if path in routes: return routes[path]()
         return error(self, "Rota não encontrada", 404)
 
@@ -283,9 +322,9 @@ class App(BaseHTTPRequestHandler):
     def api_dashboard(self):
         user = self.auth()
         if not user: return
-        con = db(); plan = plan_for_user(con, user["id"]); thought_count = con.execute("SELECT COUNT(*) c FROM thoughts WHERE user_id=?", (user["id"],)).fetchone()["c"]; checkins = con.execute("SELECT COUNT(*) c FROM checkins WHERE user_id=?", (user["id"],)).fetchone()["c"]; settings = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); current_streak = streak(con, user["id"]); con.close()
+        con = db(); plan = plan_for_user(con, user["id"]); thought_count = con.execute("SELECT COUNT(*) c FROM thoughts WHERE user_id=?", (user["id"],)).fetchone()["c"]; checkins = con.execute("SELECT COUNT(*) c FROM checkins WHERE user_id=?", (user["id"],)).fetchone()["c"]; settings = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); subscription = con.execute("SELECT plan_id,plan_title,status,expires_at FROM subscriptions WHERE user_id=? AND status='active' AND expires_at>? ORDER BY id DESC LIMIT 1", (user["id"], now_iso())).fetchone(); current_streak = streak(con, user["id"]); con.close()
         current = plan["current_day"] if plan else 1; score = checkins * 25 + thought_count * 10 + current_streak * 15
-        return json_response(self, {"user": {"name": user["name"], "email": user["email"]}, "score": score, "streak": current_streak, "thought_count": thought_count, "checkins": checkins, "plan": plan, "notifications": {"enabled": bool(settings["enabled"]) if settings else False, "reminder_time": settings["reminder_time"] if settings else "08:00"}, "today": {"day": current, "done": any(d["day"] == current and d["completed"] for d in (plan["days"] if plan else []))}})
+        return json_response(self, {"user": {"name": user["name"], "email": user["email"]}, "score": score, "streak": current_streak, "thought_count": thought_count, "checkins": checkins, "plan": plan, "notifications": {"enabled": bool(settings["enabled"]) if settings else False, "reminder_time": settings["reminder_time"] if settings else "08:00"}, "subscription": dict(subscription) if subscription else None, "today": {"day": current, "done": any(d["day"] == current and d["completed"] for d in (plan["days"] if plan else []))}})
 
     def api_thoughts(self):
         user = self.auth()
@@ -326,8 +365,54 @@ class App(BaseHTTPRequestHandler):
         if not user: return
         con = db(); row = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); con.close(); return json_response(self, {"enabled": bool(row["enabled"]), "reminder_time": row["reminder_time"]} if row else {"enabled": False, "reminder_time": "08:00"})
 
+    def api_admin_login(self):
+        if not ADMIN_EMAIL or not ADMIN_PASSWORD: return error(self, "Painel ainda não configurado: defina ADMIN_EMAIL e ADMIN_PASSWORD no Render", 503)
+        data = parse_json(self) or {}; email = str(data.get("email", "")).strip().lower(); password = str(data.get("password", ""))
+        if not hmac.compare_digest(email, ADMIN_EMAIL) or not hmac.compare_digest(password, ADMIN_PASSWORD): return error(self, "E-mail ou senha do administrador incorretos", 401)
+        return json_response(self, {"ok": True}, 200, {"Set-Cookie": admin_cookie(start_admin_session())})
+
+    def api_admin_logout(self):
+        jar = cookies.SimpleCookie(); jar.load(self.headers.get("Cookie", "")); morsel = jar.get("admin_session")
+        if morsel:
+            con = db(); con.execute("DELETE FROM admin_sessions WHERE token=?", (morsel.value,)); con.commit(); con.close()
+        return json_response(self, {"ok": True}, 200, {"Set-Cookie": "admin_session=; Path=/; Max-Age=0; HttpOnly; SameSite=Lax"})
+
+    def api_admin_me(self):
+        return json_response(self, {"authenticated": admin_authenticated(self)})
+
+    def api_admin_users(self):
+        if not admin_authenticated(self): return error(self, "Faça login como administrador", 401)
+        con = db(); rows = con.execute("""
+          SELECT u.id,u.name,u.email,u.created_at,
+                 s.id subscription_id,s.plan_title,s.status,s.starts_at,s.expires_at,s.notes
+          FROM users u
+          LEFT JOIN subscriptions s ON s.id=(SELECT MAX(id) FROM subscriptions WHERE user_id=u.id)
+          ORDER BY u.id DESC
+        """).fetchall(); con.close()
+        return json_response(self, {"users": [dict(r) for r in rows]})
+
+    def api_admin_subscription(self):
+        if not admin_authenticated(self): return error(self, "Faça login como administrador", 401)
+        data = parse_json(self) or {}
+        try: user_id = int(data.get("user_id")); days = max(1, min(3650, int(data.get("days", 30))))
+        except (TypeError, ValueError): return error(self, "Usuário ou duração inválidos")
+        plan_id = str(data.get("plan_id", "")); offer = next((x for x in STUDY_PLANS if x["id"] == plan_id), None)
+        if not offer: return error(self, "Plano premium inválido")
+        con = db(); user = con.execute("SELECT id FROM users WHERE id=?", (user_id,)).fetchone()
+        if not user: con.close(); return error(self, "Usuário não encontrado", 404)
+        starts = now_iso(); expires = (datetime.now(timezone.utc) + timedelta(days=days)).replace(microsecond=0).isoformat(); notes = str(data.get("notes", "")).strip()[:500]
+        con.execute("INSERT INTO subscriptions(user_id,plan_id,plan_title,status,starts_at,expires_at,notes,created_at) VALUES(?,?,?,?,?,?,?,?)", (user_id,plan_id,offer["title"],"active",starts,expires,notes,starts)); con.commit(); con.close()
+        return json_response(self, {"ok": True, "expires_at": expires}, 201)
+
+    def api_admin_revoke(self):
+        if not admin_authenticated(self): return error(self, "Faça login como administrador", 401)
+        data = parse_json(self) or {}
+        try: subscription_id = int(data.get("subscription_id"))
+        except (TypeError, ValueError): return error(self, "Assinatura inválida")
+        con = db(); con.execute("UPDATE subscriptions SET status='revoked' WHERE id=?", (subscription_id,)); con.commit(); con.close(); return json_response(self, {"ok": True})
+
     def api_study_offers(self):
-        return json_response(self, {"offers": STUDY_PLANS, "payment_status": "not_configured"})
+        return json_response(self, {"offers": STUDY_PLANS, "payment_status": "manual_admin_release"})
 
     def api_save_notifications(self):
         user = self.auth()

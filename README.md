@@ -15,6 +15,7 @@ Aplicação full-stack de treinamento semanal de mentalidade, feita com Python p
 - Lembrete diário via Notification API + Service Worker neste dispositivo
 - Catálogo de planos premium focados em estudos, com intenções de foco, memória, provas e rotina
 - Endpoint `/api/study-offers` para catálogo premium e `/health` para monitoramento
+- Painel protegido em `/admin.html` para listar usuários e liberar/revogar planos manualmente
 
 ## Rodar localmente
 
@@ -32,6 +33,17 @@ Para mudar a porta:
 ```bash
 PORT=8080 python3 server.py
 ```
+
+## Painel do responsável
+
+O painel fica em `/admin.html` e só funciona quando estas variáveis estiverem configuradas no ambiente do servidor:
+
+```text
+ADMIN_EMAIL=um-email-do-responsavel
+ADMIN_PASSWORD=uma-senha-forte
+```
+
+Use uma conta e uma senha exclusivas para o painel. O responsável confirma o pagamento fora do app e então libera o plano pelo painel. A integração automática com gateway ainda não está ativa.
 
 ## Deploy
 
