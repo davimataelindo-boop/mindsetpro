@@ -25,6 +25,55 @@ STUDY_PLANS = [
     {"id": "estudo-rotina", "title": "Rotina sem procrastinação", "subtitle": "Transforme intenção em horários possíveis.", "duration": "7 dias", "price": "R$ 9,90/mês", "icon": "◒", "features": ["planejamento leve", "primeiro passo", "recomeço sem culpa"]},
 ]
 
+STUDY_LESSONS = {
+    "estudo-foco": [
+        {"title":"Defina uma meta pequena","goal":"Começar com clareza, não com uma lista enorme.","activity":"Escolha uma matéria e escreva uma tarefa que caiba em 20 minutos. Exemplo: resolver 3 questões ou revisar 1 tópico.","reflection":"Como você saberá que essa tarefa ficou concluída?"},
+        {"title":"Quebre a tarefa em passos","goal":"Deixar o começo mais fácil.","activity":"Divida a tarefa em 3 passos curtos e comece pelo mais simples. Marque cada passo quando terminar.","reflection":"Qual foi o passo mais fácil de iniciar?"},
+        {"title":"Prepare seu espaço","goal":"Reduzir distrações antes de estudar.","activity":"Separe o material necessário, feche abas que não vai usar e deixe o celular fora do alcance por um bloco curto.","reflection":"Que distração você conseguiu diminuir?"},
+        {"title":"Faça um bloco de foco","goal":"Praticar atenção por um período possível.","activity":"Estude por 20 minutos. Se estiver difícil, comece com 10. Depois faça uma pausa curta para se alongar ou beber água.","reflection":"O que ajudou você a continuar?"},
+        {"title":"Recupere sem olhar","goal":"Verificar o que ficou na memória.","activity":"Feche o material e escreva ou fale 3 ideias que lembra. Depois confira suas anotações e complete o que faltou.","reflection":"O que você lembrou sem consultar?"},
+        {"title":"Escolha uma prioridade","goal":"Usar o tempo com intenção.","activity":"Olhe suas tarefas e escolha uma prioridade para o próximo bloco. Anote também o que pode esperar.","reflection":"Por que essa prioridade vem primeiro?"},
+        {"title":"Revise seu jeito de focar","goal":"Perceber o que funciona para você.","activity":"Faça um bloco curto de estudo e anote matéria, duração e distrações. Escolha uma pequena melhoria para a próxima semana.","reflection":"Qual hábito quer repetir?"},
+    ],
+    "estudo-memoria": [
+        {"title":"Faça um mapa do conteúdo","goal":"Saber o que você já sabe e o que precisa rever.","activity":"Escolha um assunto. Sem olhar o material, escreva os tópicos que lembra; depois compare com suas anotações.","reflection":"Qual parte precisa de mais uma revisão?"},
+        {"title":"Crie perguntas","goal":"Transformar leitura em prática de lembrança.","activity":"Escreva 3 perguntas sobre o assunto estudado ontem. Responda sem olhar e confira depois.","reflection":"Qual resposta precisou de mais esforço?"},
+        {"title":"Revise com intervalo","goal":"Distribuir revisões em vez de deixar tudo para a véspera.","activity":"Escolha 5 cartões ou perguntas e revise agora. Marque uma data futura para testar de novo.","reflection":"Que assunto vale revisitar amanhã?"},
+        {"title":"Explique com suas palavras","goal":"Perceber se a ideia está clara.","activity":"Explique o assunto em voz alta como se estivesse ensinando um colega. Consulte o material apenas para corrigir lacunas.","reflection":"O que ficou difícil de explicar?"},
+        {"title":"Misture exemplos","goal":"Reconhecer uma ideia em situações diferentes.","activity":"Crie 2 exemplos próprios do conteúdo. Se for matemática, resolva uma questão nova do mesmo tema.","reflection":"Qual exemplo tornou o conceito mais claro?"},
+        {"title":"Teste sem consulta","goal":"Praticar recuperação ativa.","activity":"Faça um mini-teste de 5 minutos sem consultar. Corrija com calma e transforme erros em perguntas de revisão.","reflection":"Qual erro ensinou algo útil?"},
+        {"title":"Revisão espaçada 1","goal":"Retomar o que foi estudado alguns dias atrás.","activity":"Volte ao conteúdo do Dia 1. Responda às perguntas sem olhar antes de conferir.","reflection":"O que veio à memória com facilidade?"},
+        {"title":"Construa uma folha-resumo","goal":"Organizar as ideias principais.","activity":"Em uma página, registre conceitos-chave, relações e um exemplo. Use palavras suas, não copie parágrafos.","reflection":"Qual conexão importante você percebeu?"},
+        {"title":"Revisão espaçada 2","goal":"Revisitar e fortalecer lembranças.","activity":"Escolha os tópicos dos Dias 2 e 3. Responda às perguntas antigas sem olhar e corrija o que faltou.","reflection":"Que tópico precisa entrar no próximo ciclo?"},
+        {"title":"Use cartões de pergunta","goal":"Fazer revisão curta e objetiva.","activity":"Crie até 5 cartões: pergunta de um lado, resposta curta do outro. Tente responder antes de virar.","reflection":"As perguntas estão claras e específicas?"},
+        {"title":"Compare dois conceitos","goal":"Evitar confundir ideias parecidas.","activity":"Escolha dois conceitos e escreva uma semelhança, uma diferença e um exemplo para cada.","reflection":"Qual diferença você não tinha notado?"},
+        {"title":"Revisão espaçada 3","goal":"Relembrar antes de reler.","activity":"Faça um teste curto com perguntas dos Dias 4 a 8. Só depois abra o material para conferir.","reflection":"O que você lembrou melhor desta vez?"},
+        {"title":"Ensine em 2 minutos","goal":"Resumir sem decorar frases.","activity":"Grave ou apresente uma explicação de 2 minutos, sem ler. Depois anote uma coisa clara e uma lacuna.","reflection":"O que você quer revisar mais uma vez?"},
+        {"title":"Monte seu próximo ciclo","goal":"Continuar revisando com autonomia.","activity":"Escolha 3 assuntos para rever ao longo da próxima semana e distribua em dias diferentes, deixando pausas.","reflection":"Que método de revisão funcionou melhor para você?"},
+    ],
+    "estudo-provas": [
+        {"title":"Mapeie os assuntos","goal":"Trocar ansiedade vaga por uma lista manejável.","activity":"Anote os assuntos que podem cair e marque cada um: tranquilo, preciso praticar, preciso pedir ajuda.","reflection":"Qual é o primeiro assunto que vai revisar?"},
+        {"title":"Faça um plano realista","goal":"Distribuir o estudo sem deixar tudo para a véspera.","activity":"Escolha dois blocos curtos para esta semana e indique o assunto de cada um. Reserve espaço para descanso.","reflection":"O plano cabe nos seus outros compromissos?"},
+        {"title":"Pratique uma questão","goal":"Aprender fazendo, não só lendo.","activity":"Resolva uma questão do assunto mais importante sem olhar a resposta. Depois confira e entenda o raciocínio.","reflection":"Qual foi o próximo passo que você descobriu?"},
+        {"title":"Crie uma lista de dúvidas","goal":"Pedir ajuda de forma específica.","activity":"Anote uma dúvida concreta sobre o conteúdo e escolha a quem perguntar: professor, colega ou responsável.","reflection":"Como você explicaria sua dúvida em uma frase?"},
+        {"title":"Simulado curto","goal":"Treinar com tempo limitado sem transformar isso em julgamento.","activity":"Faça 3 questões em um tempo combinado. Ao terminar, corrija e anote o que precisa praticar.","reflection":"O que aprendeu com o simulado?"},
+        {"title":"Revise os erros","goal":"Usar erros como pistas de estudo.","activity":"Escolha um erro recente. Escreva o que pensou, qual era o caminho correto e uma pergunta para lembrar disso depois.","reflection":"Que pista vai ajudar você a evitar esse erro?"},
+        {"title":"Ensaie o começo da prova","goal":"Chegar com um plano simples para começar.","activity":"Imagine receber a prova: leia as instruções, respire devagar e escolha por onde começar. Pratique esse roteiro uma vez.","reflection":"Qual primeiro passo parece mais tranquilo?"},
+        {"title":"Organize o material","goal":"Reduzir a correria do dia anterior.","activity":"Confira horário, materiais e o que precisa levar. Se houver algo que não sabe, pergunte a um adulto ou professor.","reflection":"O que já está resolvido?"},
+        {"title":"Revisão leve","goal":"Reforçar o essencial sem tentar aprender tudo de uma vez.","activity":"Revise suas perguntas e conceitos-chave por um bloco curto. Faça uma pausa e encerre no horário combinado.","reflection":"O que você já consegue explicar?"},
+        {"title":"Reconheça seu preparo","goal":"Fechar a preparação com equilíbrio.","activity":"Anote 3 coisas que praticou e escolha uma rotina calma para a véspera. Uma prova não define seu valor.","reflection":"Que frase de incentivo realista você quer levar?"},
+    ],
+    "estudo-rotina": [
+        {"title":"Escolha um horário-âncora","goal":"Vincular o estudo a um momento que já existe no dia.","activity":"Escolha um horário possível depois de uma rotina existente, como lanchar ou chegar da escola. Planeje só 15 minutos.","reflection":"Esse horário é realista para sua casa e escola?"},
+        {"title":"Comece por cinco minutos","goal":"Diminuir a dificuldade de começar.","activity":"Abra o material e trabalhe por 5 minutos. Depois decida se continua mais um pouco ou faz uma pausa.","reflection":"O que tornou o primeiro passo possível?"},
+        {"title":"Prepare antes","goal":"Tirar obstáculos do caminho.","activity":"Deixe caderno, livro e água prontos antes do horário escolhido. Anote a primeira tarefa em um papel.","reflection":"O que você conseguiu deixar preparado?"},
+        {"title":"Planeje dois blocos","goal":"Criar estrutura sem preencher o dia todo.","activity":"Escolha dois blocos curtos em dias diferentes e uma tarefa para cada. Não precisa estudar por horas para começar.","reflection":"Qual bloco parece mais fácil de cumprir?"},
+        {"title":"Faça uma pausa de verdade","goal":"Equilibrar esforço e recuperação.","activity":"Depois de um bloco curto, levante, alongue-se ou beba água. Evite transformar a pausa em culpa.","reflection":"Que pausa ajudou você a voltar?"},
+        {"title":"Recomece com gentileza","goal":"Retomar a rotina depois de um dia perdido.","activity":"Se perdeu um bloco, escolha o menor próximo passo e faça 5 minutos. Ajuste o plano em vez de tentar compensar tudo.","reflection":"O que você pode simplificar na próxima vez?"},
+        {"title":"Revise sua rotina","goal":"Manter o que funciona e adaptar o resto.","activity":"Veja quais blocos conseguiu cumprir. Escolha um hábito para manter e um ajuste pequeno para a semana seguinte.","reflection":"Qual rotina combina melhor com sua vida real?"},
+    ],
+}
+
 PLANS = {
     "foco": {
         "title": "Foco com leveza",
@@ -153,6 +202,14 @@ def init_db():
       notes TEXT NOT NULL DEFAULT '',
       created_at TEXT NOT NULL
     );
+    CREATE TABLE IF NOT EXISTS premium_progress (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+      plan_id TEXT NOT NULL,
+      lesson_day INTEGER NOT NULL,
+      completed_at TEXT NOT NULL,
+      UNIQUE(user_id, plan_id, lesson_day)
+    );
     """)
     con.commit(); con.close()
 
@@ -268,6 +325,7 @@ class App(BaseHTTPRequestHandler):
         if path == "/api/thoughts": return self.api_thoughts()
         if path == "/api/notifications": return self.api_notifications()
         if path == "/api/study-offers": return self.api_study_offers()
+        if path == "/api/premium-content": return self.api_premium_content()
         if path == "/api/admin/me": return self.api_admin_me()
         if path == "/api/admin/users": return self.api_admin_users()
         if path == "/health": return json_response(self, {"ok": True, "service": "mindsetpro"})
@@ -275,7 +333,7 @@ class App(BaseHTTPRequestHandler):
 
     def do_POST(self):
         path = urlparse(self.path).path
-        routes = {"/api/register": self.api_register, "/api/login": self.api_login, "/api/logout": self.api_logout, "/api/thoughts": self.api_add_thought, "/api/checkins": self.api_checkin, "/api/plans": self.api_create_plan, "/api/notifications": self.api_save_notifications, "/api/admin/login": self.api_admin_login, "/api/admin/logout": self.api_admin_logout, "/api/admin/subscriptions": self.api_admin_subscription, "/api/admin/revoke": self.api_admin_revoke}
+        routes = {"/api/register": self.api_register, "/api/login": self.api_login, "/api/logout": self.api_logout, "/api/thoughts": self.api_add_thought, "/api/checkins": self.api_checkin, "/api/plans": self.api_create_plan, "/api/notifications": self.api_save_notifications, "/api/premium-checkins": self.api_premium_checkin, "/api/admin/login": self.api_admin_login, "/api/admin/logout": self.api_admin_logout, "/api/admin/subscriptions": self.api_admin_subscription, "/api/admin/revoke": self.api_admin_revoke}
         if path in routes: return routes[path]()
         return error(self, "Rota não encontrada", 404)
 
@@ -322,9 +380,9 @@ class App(BaseHTTPRequestHandler):
     def api_dashboard(self):
         user = self.auth()
         if not user: return
-        con = db(); plan = plan_for_user(con, user["id"]); thought_count = con.execute("SELECT COUNT(*) c FROM thoughts WHERE user_id=?", (user["id"],)).fetchone()["c"]; checkins = con.execute("SELECT COUNT(*) c FROM checkins WHERE user_id=?", (user["id"],)).fetchone()["c"]; settings = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); subscription = con.execute("SELECT plan_id,plan_title,status,expires_at FROM subscriptions WHERE user_id=? AND status='active' AND expires_at>? ORDER BY id DESC LIMIT 1", (user["id"], now_iso())).fetchone(); current_streak = streak(con, user["id"]); con.close()
-        current = plan["current_day"] if plan else 1; score = checkins * 25 + thought_count * 10 + current_streak * 15
-        return json_response(self, {"user": {"name": user["name"], "email": user["email"]}, "score": score, "streak": current_streak, "thought_count": thought_count, "checkins": checkins, "plan": plan, "notifications": {"enabled": bool(settings["enabled"]) if settings else False, "reminder_time": settings["reminder_time"] if settings else "08:00"}, "subscription": dict(subscription) if subscription else None, "today": {"day": current, "done": any(d["day"] == current and d["completed"] for d in (plan["days"] if plan else []))}})
+        con = db(); plan = plan_for_user(con, user["id"]); thought_count = con.execute("SELECT COUNT(*) c FROM thoughts WHERE user_id=?", (user["id"],)).fetchone()["c"]; checkins = con.execute("SELECT COUNT(*) c FROM checkins WHERE user_id=?", (user["id"],)).fetchone()["c"]; premium_count = con.execute("SELECT COUNT(*) c FROM premium_progress WHERE user_id=?", (user["id"],)).fetchone()["c"]; settings = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); subscription = con.execute("SELECT plan_id,plan_title,status,expires_at FROM subscriptions WHERE user_id=? AND status='active' AND expires_at>? ORDER BY id DESC LIMIT 1", (user["id"], now_iso())).fetchone(); current_streak = streak(con, user["id"]); con.close()
+        current = plan["current_day"] if plan else 1; score = checkins * 25 + thought_count * 10 + current_streak * 15 + premium_count * 10
+        return json_response(self, {"user": {"name": user["name"], "email": user["email"]}, "score": score, "streak": current_streak, "thought_count": thought_count, "checkins": checkins, "premium_completed": premium_count, "plan": plan, "notifications": {"enabled": bool(settings["enabled"]) if settings else False, "reminder_time": settings["reminder_time"] if settings else "08:00"}, "subscription": dict(subscription) if subscription else None, "today": {"day": current, "done": any(d["day"] == current and d["completed"] for d in (plan["days"] if plan else []))}})
 
     def api_thoughts(self):
         user = self.auth()
@@ -364,6 +422,33 @@ class App(BaseHTTPRequestHandler):
         user = self.auth()
         if not user: return
         con = db(); row = con.execute("SELECT enabled,reminder_time FROM notification_settings WHERE user_id=?", (user["id"],)).fetchone(); con.close(); return json_response(self, {"enabled": bool(row["enabled"]), "reminder_time": row["reminder_time"]} if row else {"enabled": False, "reminder_time": "08:00"})
+
+    def api_premium_content(self):
+        user = self.auth()
+        if not user: return
+        con = db(); subscription = con.execute("SELECT plan_id,plan_title,expires_at FROM subscriptions WHERE user_id=? AND status='active' AND expires_at>? ORDER BY id DESC LIMIT 1", (user["id"], now_iso())).fetchone()
+        if not subscription:
+            con.close(); return error(self, "Você ainda não tem um plano premium ativo. Peça ao responsável para conferir a liberação.", 403)
+        lessons = STUDY_LESSONS.get(subscription["plan_id"])
+        if not lessons:
+            con.close(); return error(self, "O conteúdo deste plano não está disponível.", 404)
+        done = {r["lesson_day"] for r in con.execute("SELECT lesson_day FROM premium_progress WHERE user_id=? AND plan_id=?", (user["id"], subscription["plan_id"]))}
+        con.close()
+        return json_response(self, {"plan_id": subscription["plan_id"], "plan_title": subscription["plan_title"], "expires_at": subscription["expires_at"], "lessons": [{"day": i+1, **lesson, "completed": i+1 in done} for i, lesson in enumerate(lessons)]})
+
+    def api_premium_checkin(self):
+        user = self.auth()
+        if not user: return
+        data = parse_json(self) or {}; plan_id = str(data.get("plan_id", ""))
+        try: lesson_day = int(data.get("day", 0))
+        except (TypeError, ValueError): return error(self, "Dia inválido")
+        lessons = STUDY_LESSONS.get(plan_id, [])
+        if lesson_day < 1 or lesson_day > len(lessons): return error(self, "Dia inválido")
+        con = db(); subscription = con.execute("SELECT id FROM subscriptions WHERE user_id=? AND plan_id=? AND status='active' AND expires_at>? ORDER BY id DESC LIMIT 1", (user["id"], plan_id, now_iso())).fetchone()
+        if not subscription:
+            con.close(); return error(self, "Este plano não está ativo na sua conta.", 403)
+        con.execute("INSERT OR IGNORE INTO premium_progress(user_id,plan_id,lesson_day,completed_at) VALUES(?,?,?,?)", (user["id"], plan_id, lesson_day, now_iso())); con.commit(); con.close()
+        return json_response(self, {"ok": True, "points_awarded": 10})
 
     def api_admin_login(self):
         if not ADMIN_EMAIL or not ADMIN_PASSWORD: return error(self, "Painel ainda não configurado: defina ADMIN_EMAIL e ADMIN_PASSWORD no Render", 503)

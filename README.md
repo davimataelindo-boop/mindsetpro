@@ -14,7 +14,8 @@ Aplicação full-stack de treinamento semanal de mentalidade, feita com Python p
 - PWA instalável
 - Lembrete diário via Notification API + Service Worker neste dispositivo
 - Catálogo de planos premium focados em estudos, com intenções de foco, memória, provas e rotina
-- Endpoint `/api/study-offers` para catálogo premium e `/health` para monitoramento
+- Conteúdo premium protegido por plano ativo, com práticas diárias e conclusão salva por usuário
+- Endpoint `/api/study-offers` para catálogo, `/api/premium-content` e `/api/premium-checkins` para conteúdo e progresso; `/health` para monitoramento
 - Painel protegido em `/admin.html` para listar usuários e liberar/revogar planos manualmente
 
 ## Rodar localmente
@@ -33,6 +34,10 @@ Para mudar a porta:
 ```bash
 PORT=8080 python3 server.py
 ```
+
+## Dados no Render Free
+
+O app usa SQLite em `/app/data`. No Render Free, o disco local não é persistente; um novo deploy pode apagar contas, progresso e liberações manuais. Antes de publicar atualizações com dados que precisam ser mantidos, configure armazenamento persistente pago ou migre para um banco gerenciado apropriado. Um novo deploy pode exigir recriar a conta de teste e liberar o plano novamente.
 
 ## Painel do responsável
 
@@ -53,7 +58,7 @@ A aplicação pode ser executada em qualquer serviço que aceite um processo Pyt
 2. Defina `PORT` conforme o provedor.
 3. Monte um volume persistente em `/app/data` para preservar o SQLite.
 4. Para vários processos/instâncias, troque SQLite por PostgreSQL e coloque um proxy HTTPS na frente.
-5. O lembrete atual funciona quando o usuário abre o app nesse dispositivo. Para push em segundo plano mesmo com o app fechado, conecte um provedor Web Push/VAPID e um job agendado no servidor. Os planos premium de estudos estão apresentados como pré-lançamento; o checkout ainda não está integrado.
+5. O lembrete atual funciona quando o usuário abre o app nesse dispositivo. Para push em segundo plano mesmo com o app fechado, conecte um provedor Web Push/VAPID e um job agendado no servidor. Os planos premium de estudos incluem atividades educativas, mas o checkout ainda não está integrado; o responsável libera o acesso manualmente pelo painel depois de confirmar o pagamento.
 
 ## Segurança antes de produção
 
